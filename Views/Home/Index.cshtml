@@ -1,0 +1,134 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        body {
+            background-color: #1f2937; /* Dark gray background */
+            color: #ffffff;
+        }
+
+        .sidebar {
+            background-color: #111827; /* Sidebar background */
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 200px;
+            padding: 20px;
+        }
+
+            .sidebar h2 {
+                font-size: 1.5rem;
+                font-weight: bold;
+                color: #00c1d4;
+            }
+
+            .sidebar a {
+                color: #a1a1aa;
+                text-decoration: none;
+                display: block;
+                padding: 10px 5px;
+                margin-bottom: 3px;
+                border-radius: 150px;
+                transition: background 0.3s;
+            }
+
+                .sidebar a:hover {
+                    background-color: #374151; /* Hover effect */
+                    color: #ffffff;
+                }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 30px;
+        }
+
+        .card {
+            background-color: #2d3748; /* Dark card background */
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+            .card h5 {
+                color: #00c1d4;
+            }
+
+        .btn-custom {
+            background-color: #00c1d4;
+            color: #111827;
+            border: none;
+        }
+
+            .btn-custom:hover {
+                background-color: #0098a8;
+                color: #ffffff;
+            }
+
+        .footer {
+            text-align: center;
+            color: #9ca3af;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>Healthcare System</h2>
+        <a href="#">About</a>
+        <a href="#">Logout</a>
+    </div>
+
+    <div class="main-content">
+        <div class="container">
+            <!-- Header -->
+            <div class="mb-4">
+                <h1 class="fw-bold">System Dashboard</h1>
+            </div>
+
+            <!-- Section Cards -->
+            <div class="row g-4">
+                <!-- Admin Section -->
+                <div class="col-md-4">
+                    <div class="card text-white text-center p-4">
+                        <h5 class="card-title">Admin Panel</h5>
+                        <p class="card-text">
+                            Oversee and manage all user roles within the system, configure and maintain system settings for optimal performance, generate detailed reports, and ensure the smooth operation of healthcare management processes.
+                        </p>
+                        <a href="/Admin/AdminPanel" class="btn btn-custom">Manage Admin</a>
+                    </div>
+                </div>
+
+                <!-- Nurse Section -->
+                <div class="col-md-4">
+                    <div class="card text-white text-center p-4">
+                        <h5 class="card-title">Nurse Panel</h5>
+                        <p class="card-text">
+                            Monitor and track patient vitals in real-time, update and maintain accurate medical records, assist in patient care, and efficiently schedule and manage appointments to ensure seamless healthcare delivery.
+                        </p>
+                        <a href="nurse.html" class="btn btn-custom">Manage Nurse</a>
+                    </div>
+                </div>
+
+                <!-- Doctor Section -->
+                <div class="col-md-4">
+                    <div class="card text-white text-center p-4">
+                        <h5 class="card-title">Doctor Panel</h5>
+                        <p class="card-text">
+                            Manage patient records, prescribe medications, and oversee consultations. Access medical histories and collaborate with healthcare professionals to ensure quality care.
+                        </p>
+                        <a href="doctor.html" class="btn btn-custom">Manage Doctor</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

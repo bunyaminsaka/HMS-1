@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Panel</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body style="background-color: #1f2937; color: white;">
+
+    <div class="container py-5">
+        <h1 class="fw-bold">Doctor Panel</h1>
+
+        <div class="mt-4">
+            <h5>Doctor's Information</h5>
+            <p><strong>Name:</strong> Dr. Jan Kowalski</p>
+            <p><strong>PWZ Number:</strong> PL123456789</p>
+        </div>
+
+        <!-- Table for displaying doctor schedule -->
+        <table class="table table-dark table-striped mt-4">
+            <thead>
+                <tr>
+                    <th scope="col">PWZ Number</th>
+                    <th scope="col">Specialization</th>
+                    <th scope="col">Day</th>
+                    <th scope="col">Hours</th>
+                </tr>
+            </thead>
+            <tbody id="doctor-table-body">
+                <!-- Doctor's data will be inserted dynamically -->
+            </tbody>
+        </table>
+
+        <!-- Patients List Section -->
+        <div class="mt-5">
+            <h4 class="fw-bold">Your Patients</h4>
+            <div id="patients-list">
+                <!-- Patients data will be inserted dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simulating logged-in doctor (example, replace with dynamic login data in real application)
+        const loggedInDoctorPWZ = "PL123456789";  // Example PWZ number
+
+        // Simulated doctor data
+        const doctorsData = [
+            { pwz: "PL123456789", specialization: "Cardiology", role: "Doctor", day: "2025-01-30", hours: "08:00 - 16:00" }
+        ];
+
+        // Simulated patient data
+        const patientsData = [
+            { name: "John Doe", diagnosis: "Hypertension", lastVisit: "2025-01-20" },
+            { name: "Jane Smith", diagnosis: "Asthma", lastVisit: "2025-01-15" }
+        ];
+
+        // Function to display data for the logged-in doctor
+        window.onload = function() {
+            const doctorTableBody = document.getElementById("doctor-table-body");
+            const patientsList = document.getElementById("patients-list");
+
+            // Filter doctor data based on PWZ number
+            const doctorData = doctorsData.filter(doctor => doctor.pwz === loggedInDoctorPWZ);
+
+            // Insert doctor data into the table
+            doctorData.forEach(doctor => {
+                const row = doctorTableBody.insertRow();
+                row.innerHTML = `
+                    <td>${doctor.pwz}</td>
+                    <td>${doctor.specialization}</td>
+                    <td>${doctor.day}</td>
+                    <td>${doctor.hours}</td>
+                `;
+            });
+
+            // Insert patient data into the list
+            patientsData.forEach(patient => {
+                const patientCard = document.createElement("div");
+                patientCard.classList.add("card", "text-white", "bg-dark", "mb-3");
+                patientCard.innerHTML = `
+                    <div class="card-body">
+                        <h5 class="card-title">${patient.name}</h5>
+                        <p class="card-text"><strong>Diagnosis:</strong> ${patient.diagnosis}</p>
+                        <p class="card-text"><strong>Last Visit:</strong> ${patient.lastVisit}</p>
+                        <a href="#" class="btn btn-info">View Medical Records</a>
+                    </div>
+                `;
+                patientsList.appendChild(patientCard);
+            });
+        };
+    </script>
+
+</body>
+</html>

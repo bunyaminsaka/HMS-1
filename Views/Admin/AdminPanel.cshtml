@@ -1,0 +1,168 @@
+﻿@{
+    ViewData["Title"] = "Admin Panel";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body style="background-color: #1f2937; color: white;">
+
+    <div class="container py-5">
+        <h1 class="fw-bold">Admin Panel</h1>
+        <p>
+            View and manage your working dates, specialization, appointments, and healthcare staff.
+        </p>
+        <a href="Index.html" class="btn btn-light">Back to Dashboard</a>
+
+        <h3 class="mt-5">Manage Appointments</h3>
+
+        <!-- Form to Add Appointment -->
+        <form id="addAppointmentForm" class="mb-4">
+            <div class="mb-3">
+                <label for="patientName" class="form-label">Patient Name</label>
+                <input type="text" class="form-control" id="patientName" placeholder="Enter patient name">
+            </div>
+            <div class="mb-3">
+                <label for="appointmentDay" class="form-label">Appointment Day</label>
+                <input type="date" class="form-control" id="appointmentDay">
+            </div>
+            <div class="mb-3">
+                <label for="appointmentTime" class="form-label">Appointment Time</label>
+                <input type="time" class="form-control" id="appointmentTime">
+            </div>
+            <button type="submit" class="btn btn-primary">Add Appointment</button>
+        </form>
+
+        <h3>Manage Healthcare Staff</h3>
+        <button class="btn btn-success mb-3" id="addDoctorBtn">Add Doctor</button>
+        <button class="btn btn-info mb-3" id="addPatientBtn">Add Patient</button>
+
+        <!-- Appointment Table -->
+        <h3 class="mt-5">Appointments</h3>
+        <table class="table table-dark table-striped mt-4" id="appointmentsTable">
+            <thead>
+                <tr>
+                    <th scope="col">Patient Name</th>
+                    <th scope="col">Appointment Day</th>
+                    <th scope="col">Appointment Time</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody id="appointmentsTableBody">
+                <!-- Dynamic appointments will be inserted here -->
+            </tbody>
+        </table>
+
+        <!-- Healthcare Staff (Doctors, Patients) -->
+        <div id="staffSection">
+            <h4>Doctors</h4>
+            <ul id="doctorsList" class="list-group mb-3">
+                <!-- Dynamic list of doctors -->
+            </ul>
+
+            <h4>Patients</h4>
+            <ul id="patientsList" class="list-group mb-3">
+                <!-- Dynamic list of patients -->
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Simulated data for appointments and healthcare staff
+        let appointments = [
+            { patientName: "John Doe", day: "2025-01-20", time: "10:00" },
+            { patientName: "Jane Smith", day: "2025-01-22", time: "14:00" }
+        ];
+
+        let doctors = ["Dr. Jan Kowalski (Cardiology)", "Dr. Anna Nowak (Neurology)"];
+        let patients = ["John Doe", "Jane Smith"];
+
+        // Add Appointment
+        document.getElementById("addAppointmentForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const patientName = document.getElementById("patientName").value;
+            const appointmentDay = document.getElementById("appointmentDay").value;
+            const appointmentTime = document.getElementById("appointmentTime").value;
+
+            const newAppointment = { patientName, day: appointmentDay, time: appointmentTime };
+            appointments.push(newAppointment);
+            renderAppointments();
+            document.getElementById("addAppointmentForm").reset();
+        });
+
+        // Render Appointments Table
+        function renderAppointments() {
+            const tableBody = document.getElementById("appointmentsTableBody");
+            tableBody.innerHTML = "";
+
+            appointments.forEach((appointment, index) => {
+                const row = tableBody.insertRow();
+                row.innerHTML = `
+                    <td>${appointment.patientName}</td>
+                    <td>${appointment.day}</td>
+                    <td>${appointment.time}</td>
+                    <td>
+                        <button class="btn btn-danger" onclick="removeAppointment(${index})">Remove</button>
+                    </td>
+                `;
+            });
+        }
+
+        // Remove Appointment
+        function removeAppointment(index) {
+            appointments.splice(index, 1);
+            renderAppointments();
+        }
+
+        // Add Doctor and Patient
+        function addStaffMember(staffType, name) {
+            if (staffType === 'doctor') doctors.push(name);
+            if (staffType === 'patient') patients.push(name);
+
+            renderStaff();
+        }
+
+        // Remove Staff Member (Doctor, or Patient)
+        function removeStaffMember(staffType, index) {
+            if (staffType === 'doctor') doctors.splice(index, 1);
+            if (staffType === 'patient') patients.splice(index, 1);
+
+            renderStaff();
+        }
+
+        // Render Staff (Doctors, Patients)
+        function renderStaff() {
+            document.getElementById("doctorsList").innerHTML = doctors.map((doctor, index) =>
+                `<li class="list-group-item">
+                    ${doctor} <button class="btn btn-danger btn-sm float-end" onclick="removeStaffMember('doctor', ${index})">Remove</button>
+                </li>`).join('');
+            document.getElementById("patientsList").innerHTML = patients.map((patient, index) =>
+                `<li class="list-group-item">
+                    ${patient} <button class="btn btn-danger btn-sm float-end" onclick="removeStaffMember('patient', ${index})">Remove</button>
+                </li>`).join('');
+        }
+
+        // Event listeners for Add Staff buttons
+        document.getElementById("addDoctorBtn").addEventListener("click", function () {
+            const doctorName = prompt("Enter the doctor's name:");
+            if (doctorName) addStaffMember('doctor', doctorName);
+        });
+
+        document.getElementById("addPatientBtn").addEventListener("click", function () {
+            const patientName = prompt("Enter the patient's name:");
+            if (patientName) addStaffMember('patient', patientName);
+        });
+
+        // Initial Render
+        renderAppointments();
+        renderStaff();
+    </script>
+
+</body>
+</html>
